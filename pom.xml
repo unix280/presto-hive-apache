@@ -1239,6 +1239,8 @@
                                         <exclude>hive-exec-log4j2.properties</exclude>
                                         <exclude>tez-container-log4j2.properties</exclude>
                                         <exclude>org/apache/hadoop/hive/ql/io/CodecPool*.class</exclude>
+                                        <exclude>org/apache/hadoop/hive/ql/io/orc/OrcUtil*.class</exclude>
+                                        <exclude>org/apache/hadoop/hive/metastore/ProtectMode*.class</exclude>
                                         <exclude>org/apache/tez/**</exclude>
                                     </excludes>
                                 </filter>
@@ -1260,14 +1262,28 @@
                                     <excludes>
                                         <exclude>org/apache/hadoop/hive/serde2/avro/AvroSerDe*.class</exclude>
                                         <exclude>org/apache/hadoop/hive/serde2/avro/InstanceCache*.class</exclude>
+                                        <exclude>org/apache/hadoop/hive/serde2/columnar/OptimizedLazyBinaryColumnarSerde*.class</exclude>
                                         <exclude>org/apache/hadoop/hive/serde2/io/DoubleWritable*.class</exclude>
                                         <exclude>org/apache/hadoop/hive/serde2/json/HiveJsonReader*.class</exclude>
+                                        <exclude>org/apache/hadoop/hive/serde2/objectinspector/ObjectInspectorUtils*.class</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
                                     <artifact>org.apache.hive.hcatalog:hive-hcatalog-core</artifact>
                                     <excludes>
                                         <exclude>org/apache/hive/hcatalog/data/JsonSerDe*.class</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.apache.orc:orc-core</artifact>
+                                    <excludes>
+                                        <exclude>org/apache/orc/NullMemoryManager*.class</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.apache.parquet:parquet-column</artifact>
+                                    <excludes>
+                                        <exclude>org/apache/parquet/io/ColumnIOUtil*.class</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
@@ -1435,10 +1451,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.9</version>
+                    <version>3.6.3</version>
                     <configuration>
                         <source>${project.build.targetJdk}</source>
-                        <additionalparam>-quiet</additionalparam>
+                        <detectJavaApiLink>false</detectJavaApiLink>
+                        <doclint>none</doclint>
+                        <quiet>true</quiet>
                     </configuration>
                 </plugin>
             </plugins>
