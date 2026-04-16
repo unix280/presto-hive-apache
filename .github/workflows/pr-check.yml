@@ -41,3 +41,6 @@ jobs:
 
       - name: Generate Javadoc
         run: mvn -B javadoc:javadoc
+
+      - name: Verify
+        run: mvn -B verify
